@@ -1,0 +1,54 @@
+<settings>
+    <setting id="Channel_1_type" value="1" />
+    <setting id="Channel_1_1" value="Discovery" />
+    <setting id="Channel_1_rulecount" value="1" />
+    <setting id="Channel_1_rule_1_id" value="1" />
+    <setting id="Channel_1_rule_1_opt_1" value="Discovery" />
+    <setting id="Channel_1_changed" value="False" />
+    <setting id="Channel_2_type" value="1" />
+    <setting id="Channel_2_1" value="FOX" />
+    <setting id="Channel_2_rulecount" value="1" />
+    <setting id="Channel_2_rule_1_id" value="1" />
+    <setting id="Channel_2_rule_1_opt_1" value="Fox" />
+    <setting id="Channel_2_changed" value="False" />
+    <setting id="Channel_3_type" value="1" />
+    <setting id="Channel_3_1" value="Fuji TV" />
+    <setting id="Channel_3_rulecount" value="1" />
+    <setting id="Channel_3_rule_1_id" value="1" />
+    <setting id="Channel_3_rule_1_opt_1" value="Fuji TV" />
+    <setting id="Channel_3_changed" value="False" />
+    <setting id="LastResetTime" value="1413487691" />
+    <setting id="Channel_1_time" value="21" />
+    <setting id="Channel_2_time" value="10" />
+    <setting id="Channel_3_time" value="21" />
+    <setting id="LastExitTime" value="1413487703" />
+    <setting id="ForceChannelReset" value="True" />
+    <setting id="Channel_103_type" value="11" />
+    <setting id="Channel_103_1" value="http://feeds.twit.tv/twit_video_hd.xml" />
+    <setting id="Channel_103_2" value="1" />
+    <setting id="Channel_103_3" value="25" />
+    <setting id="Channel_103_4" value="0" />
+    <setting id="Channel_103_rulecount" value="1" />
+    <setting id="Channel_103_rule_1_id" value="1" />
+    <setting id="Channel_103_rule_1_opt_1" value="TWIT-TWIT" />
+    <setting id="Channel_103_changed" value="False" />
+    <setting id="Channel_103_time" value="9640" />
+	<setting id="Channel_101_type" value="10" />
+	<setting id="Channel_101_1" value="Nintendo" />
+	<setting id="Channel_101_2" value="1" />
+	<setting id="Channel_101_3" value="50" />
+	<setting id="Channel_101_4" value="0" />
+	<setting id="Channel_101_rulecount" value="1" />
+	<setting id="Channel_101_rule_1_id" value="1" />
+	<setting id="Channel_101_rule_1_opt_1" value="Nintendo Direct" />
+	<setting id="Channel_101_changed" value="True" />
+	<setting id="Channel_102_type" value="10" />
+	<setting id="Channel_102_1" value="PLmZTDWJGfRq2oRKC4JamrGVVx5E6WUgzE" />
+	<setting id="Channel_102_2" value="2" />
+	<setting id="Channel_102_3" value="25" />
+	<setting id="Channel_102_4" value="0" />
+	<setting id="Channel_102_rulecount" value="1" />
+	<setting id="Channel_102_rule_1_id" value="1" />
+	<setting id="Channel_102_rule_1_opt_1" value="WatchMojo-CMPD" />
+	<setting id="Channel_102_changed" value="True" />
+</settings>
