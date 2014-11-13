@@ -17,12 +17,6 @@
     <setting id="Channel_3_rule_1_id" value="1" />
     <setting id="Channel_3_rule_1_opt_1" value="Fuji TV" />
     <setting id="Channel_3_changed" value="False" />
-    <setting id="LastResetTime" value="1413487691" />
-    <setting id="Channel_1_time" value="21" />
-    <setting id="Channel_2_time" value="10" />
-    <setting id="Channel_3_time" value="21" />
-    <setting id="LastExitTime" value="1413487703" />
-    <setting id="ForceChannelReset" value="True" />
     <setting id="Channel_103_type" value="11" />
     <setting id="Channel_103_1" value="http://feeds.twit.tv/twit_video_hd.xml" />
     <setting id="Channel_103_2" value="1" />

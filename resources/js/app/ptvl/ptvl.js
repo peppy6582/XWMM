@@ -27,7 +27,7 @@ var settingsFileRecord = Ext.data.Record.create([
     { name: 'label'}
 ]);
 
-var settingsUrlRecord = Ext.data.Record.create([
+/*var settingsUrlRecord = Ext.data.Record.create([
     { name: 'path', mapping: '@path'}
 ]);
 
@@ -44,10 +44,35 @@ var settingsUrl = new Ext.data.Store({
         }
     }),
     reader: new Ext.data.JsonReader({ root: 'result'}, settingsUrlRecord)
+});*/
+
+var settings = new Ext.data.GroupingStore({
+    id: 'settingsStore',
+    url: '/resources/js/app/ptvl/settings2.xml',
+    autoload: false,
+    reader: new Ext.data.XmlReader({
+        record: '>setting',
+        idProperty: '@id',
+        fields: [
+            {name: 'id', mapping: '@id'},
+            {name: 'value', mapping: '@value'},
+            {name: 'number'}
+        ],
+        groupField: 'number'
+    })
 });
 
+settings.load();
 
-var settingsFile = new Ext.data.Store({
+settings.on('load', function(store, recs, opt){
+    settings.each(function(record){
+        var channel_id = record.get('id');
+        channel_id = channel_id.split("_");
+        record.set('number', channel_id[1]);
+    });
+}, this);
+
+/*var settingsFile = new Ext.data.Store({
     autoload: true,
     proxy: new Ext.data.XBMCProxy({
         jsonData: {
@@ -62,121 +87,93 @@ var settingsFile = new Ext.data.Store({
         }
     }),
     reader: new Ext.data.JsonReader({ root: 'result.files' }, settingsFileRecord)
+});*/
+
+var channelgrid = new Ext.grid.GridPanel({
+    id: 'channelsgrid',
+    title: '<div align="center">Select a Channel</div>',
+    store: settings,
+    columns: [
+        {header: "Id", width: 130, dataIndex: 'id', sortable: true},
+        {header: 'Value', dataIndex: 'value'},
+        {header: 'Channel Number', dataIndex: 'number'}
+    ],
+    view: new Ext.grid.GroupingView({
+        forceFit:true,
+        groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Items" : "Item"]})'
+    }),
+    enableColumnResize: false,
+    height: 750,
+    stripeRows: true,
+    sm: new Ext.grid.RowSelectionModel({ singleSelect: true })
 });
 
-
-var SettingsPanel = new Ext.FormPanel({
-    fileUpload: true,
+var optionsPanel = new Ext.FormPanel({
+    id: 'optionsPanel',
+    title: '<div align="center">Select Options</div>',
+    layout: 'form',
     frame: true,
-    title: '<div align="center">Settings</div>',
-    autoHeight: true,
-    defaults: {
-        anchor: '95%',
-        allowBlank: false,
-        msgTarget: 'side'
-    },
-    items: [
+    height: 220,
+    items:[
         {
-            xtype: 'button',
-            text: 'Load',
-            width: 10,
-            height: 24,
-            handler: function (btn, evt) { SettingsPanel.getForm().submit(); },
-            listeners: {
-                click: function () {
-                    settingsFile.load();
-                    settingsUrl.load();
-                    settings.load();
-                }
-            }
+            xtype: 'checkboxgroup',
+            columns: 2,
+            items: [
+                {boxLabel: 'Display Logo', name: 'ChkLogo'},
+                {boxLabel: "Don't play this channel", name: 'ChkDontPlayChannel'},
+                {boxLabel: 'Force random', name: 'ChkRandom'},
+                {boxLabel: 'Force realtime', name: 'ChkRealTime'},
+                {boxLabel: 'Force resume', name: 'ChkResume'},
+                {boxLabel: 'Pause when not watching', name: 'ChkPause'},
+                {boxLabel: 'Only play unwatched', name: 'ChkUnwatched'},
+                {boxLabel: 'Play shows in order', name: 'ChkResume'},
+                {boxLabel: 'Only play watched', name: 'ChkWatched'},
+                {boxLabel: 'Exclude Strms', name: 'ChkIceLibrary'},
+                {boxLabel: 'Exclude BCTs', name: 'ChkExcludeBCT'},
+                {boxLabel: 'Disable ComingUp Popup', name: 'ChkPop'}
+            ]
+        },
+        {
+          xtype: 'spacer',
+            height: 10
+        },
+        {
+            xtype: 'textfield',
+            bodyStyle: 'padding:15px',
+            fieldLabel: 'Reset Every X Hours',
+            name: 'reset'
         }
     ]
-});
-
-
-var grid = new Ext.grid.GridPanel({
-    id: 'channelsgrid',
-    store: settingsFile,
-    columns: [
-        {header: "File", width: 260, dataIndex: 'file', sortable: true},
-        {header: 'Label', dataIndex: 'label'}
-    ],
-    enableColumnResize: false,
-    height: 200,
-    stripeRows: true,
-    sm: new Ext.grid.RowSelectionModel({ singleSelect: true })
-});
-
-
-var settingsgrid = new Ext.grid.GridPanel({
-    id: 'settingsgrid',
-    store: settingsUrl,
-    columns: [
-        {header: "Path", width: 250, dataIndex: 'path', sortable: true}
-    ],
-    enableColumnResize: false,
-    height:400,
-    stripeRows: true,
-    sm: new Ext.grid.RowSelectionModel({ singleSelect: true })
 });
 
 var channelDetailsPanel = new Ext.FormPanel({
     id: 'channelDetailsPanel',
-    title: '<div align="center">Select a Channel</div>',
-
-    region: 'center',
-
+    title: '<div align="center">Channel Settings</div>',
+    layout: 'form',
     frame: true,
-
-    layout: 'table',
-    layoutConfig: { columns: 2 },
+    labelAlign: 'left',
+    labelWidth: 75,
     items:[
-        {
-            layout: 'form',
-            labelWidth: 65,
-            padding: '0 10px',
-            defaults: {
+            {
                 xtype: 'textfield',
-                width: 400,
-                listeners: {
-                    change: function() {
-                        Ext.getCmp('savebutton').enable();
-                    }
-                }
+                fieldLabel: 'Channel',
+                style:'width: 100%',
+                name: 'id'
             },
-
-            items: [
-                {
-                    fieldLabel: 'Channel',
-                    name: 'id'
-                },
-                {
-                    fieldLabel: 'Setting',
-                    name: 'value'
-                },
-                {
-                    fieldLabel: 'Settings2',
-                    name: 'libDirectory'
-                }
-            ]
-        }
-    ]
+            {
+                xtype: 'textfield',
+                fieldLabel: 'Setting',
+                style:'width: 100%',
+                name: 'value'
+            },
+            {
+                xtype: 'textfield',
+                fieldLabel: 'Option',
+                style:'width: 100%',
+                name: 'libDirectory'
+            }
+        ]
 });
-
-var settings = new Ext.data.Store({
-    proxy: new Ext.data.XBMCProxy({
-        url: "http://localhost:8080/vfs/special%3a%2f%2fprofile%2faddon_data%2fscript.pseudotv.live%2fsettings2.xml",
-        autoload: false,
-        reader: new Ext.data.XmlReader({
-            record: '>setting',
-            idProperty: '@id',
-            fields: [
-                {name: 'id', mapping: '@id'},
-                {name: 'value', mapping: '@value'}
-            ]
-        })
-    })
- });
 
 PTVL.Mainpanel = new Ext.Panel({
     region: 'center',
@@ -186,51 +183,27 @@ PTVL.Mainpanel = new Ext.Panel({
     loadMask: true,
 
     items: [
-        {
-            xtype: 'panel',
-            region: 'east',
-            split: true,
-            width: 225,
-            items: [{
-                layout: 'accordion',
-                height: 500,
-                items: [
-
-                ]
-            }]
-        },
         menuBar,
         {
             xtype: 'panel',
             region: 'west',
-
-            layout: 'hbox',
-            layoutConfig: {align: 'stretch'},
-            width: 380,
-
+            collapsible: true,
+            layout: 'fit',
+            width: 320,
+            frame: true,
             items: [
-                {
-                    xtype: 'panel',
-                    flex: 1,
-
-                    layout: 'vbox',
-                    layoutConfig: {align: 'left'},
-
-                    items: [
-                        grid,
-                        settingsgrid
-                    ]
-                },
-
+                        channelgrid
             ]
         },
         {
             xtype: 'panel',
             region: 'center',
+            layout: 'vbox',
+            layoutConfig: {align: 'stretch'},
             id: 'mainpanel',
             items: [
                 channelDetailsPanel,
-                SettingsPanel
+                optionsPanel
             ]
         }
     ],

@@ -82,6 +82,12 @@ var menuBar = new Ext.Toolbar({
         },
         {
             xtype: 'tbbutton',
+            text: 'Test',
+            width: 60,
+            handler: function() { window.location = 'grouping.html'; }
+        },
+        {
+            xtype: 'tbbutton',
             text: 'Music',
             width: 60,
             menu: [
@@ -101,6 +107,12 @@ var menuBar = new Ext.Toolbar({
                     handler: function() { window.location = 'music-by-year.html'; }
                 }
             ]
+        },
+        {
+            xtype: 'tbbutton',
+            text: 'PTVL',
+            width: 60,
+            handler: function() { window.location = 'ptvl.html'; }
         }
     ]
 });

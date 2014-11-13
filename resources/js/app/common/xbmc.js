@@ -256,7 +256,7 @@ Ext.extend(Ext.data.XBMCProxy, Ext.data.DataProxy, {
     }
 });
 
-Ext.data.DataProxy.on('exception', function(conn, type, action, options, response, arg) {
+/*Ext.data.DataProxy.on('exception', function(conn, type, action, options, response, arg) {
     if ('error' in response.responseJSON) {
         console.error('JSON-RPC request failed. %s',
             response.responseJSON.error.message,
@@ -268,7 +268,7 @@ Ext.data.DataProxy.on('exception', function(conn, type, action, options, respons
             response,
             Ext.util.JSON.decode(options.jsonData));
     }
-});
+});*/
 
 /**
  * Add a quick search feature to a text box.

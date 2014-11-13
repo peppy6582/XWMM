@@ -314,7 +314,7 @@ var episodeDetailsPanel = new Ext.FormPanel({
                     xtype: 'textarea',
                     fieldLabel: 'Description',
                     name: 'plot',
-                    height: 125,
+                    height: 125
                 }
             ]
         }, 
